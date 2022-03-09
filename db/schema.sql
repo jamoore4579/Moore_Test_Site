@@ -1,0 +1,2 @@
+DROP DATABASE IF EXISTS test_site_db;
+CREATE DATABASE test_site_db;
