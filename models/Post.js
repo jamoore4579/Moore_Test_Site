@@ -26,6 +26,10 @@ Post.init(
         len: [1]
       }
     },
+    post_img: {
+      type: DataTypes.LONGBLOB,
+      allowNull: false
+    },
     user_id: {
       type: DataTypes.INTEGER,
       references: {
