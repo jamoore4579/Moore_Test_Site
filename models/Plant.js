@@ -50,11 +50,7 @@ Plant.init(
     },
     // plant type
     category_id: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: 'category',
-        key: 'id'
-      }
+      type: DataTypes.INTEGER
     },
   
   },
