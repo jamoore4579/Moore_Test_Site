@@ -44,8 +44,8 @@ router.get('/:id', (req, res) => {
     },
     attributes: [
       'id',
-      'post_text',
       'title',
+      'post_text',
       'post_img',
       'created_at'
     ],
