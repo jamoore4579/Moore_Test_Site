@@ -1,22 +1,23 @@
 const router = require('express').Router();
 const sequelize = require('../config/connection');
-const { Post, User, Comment } = require('../models');
+const { Profile, User } = require('../models');
 const withAuth = require('../utils/auth');
 
 // get all posts for dashboard
 router.get('/', withAuth, (req, res) => {
   console.log(req.session);
 
-  Post.findAll({
+  Profile.findAll({
     where: {
       user_id: req.session.user_id
     },
     attributes: [
       'id',
-      'title',
-      'post_text',
-      'post_img',
-      'created_at'
+      'name',
+      'sunlight',
+      'water',
+      'date_water',
+      'plant_img'
     ],
     include: [
       {
@@ -44,7 +45,7 @@ router.get('/', withAuth, (req, res) => {
 });
 
 router.get('/edit/:id', withAuth, (req, res) => {
-  Post.findByPk(req.params.id, {
+  Profile.findByPk(req.params.id, {
     attributes: [
       'id',
       'post_text',
