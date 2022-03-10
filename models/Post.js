@@ -27,8 +27,8 @@ Post.init(
       }
     },
     post_img: {
-      type: DataTypes.LONGBLOB,
-      allowNull: false
+      type: DataTypes.BLOB,
+      allowNull: false,
     },
     user_id: {
       type: DataTypes.INTEGER,

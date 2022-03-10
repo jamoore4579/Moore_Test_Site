@@ -46,6 +46,7 @@ router.get('/:id', (req, res) => {
       'id',
       'post_text',
       'title',
+      'post_img',
       'created_at'
     ],
     include: [
@@ -77,6 +78,7 @@ router.post('/', withAuth, (req, res) => {
   Post.create({
     title: req.body.title,
     post_text: req.body.post_text,
+    post_img: req.body.post_img,
     user_id: req.session.user_id
   })
     .then(dbPostData => res.json(dbPostData))
