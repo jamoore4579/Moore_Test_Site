@@ -15,6 +15,7 @@ router.get('/', withAuth, (req, res) => {
       'id',
       'title',
       'post_text',
+      'post_img',
       'created_at'
     ],
     include: [
