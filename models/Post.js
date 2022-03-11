@@ -1,11 +1,10 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
-
 // create our Post model
-class Plant extends Model { }
+class Post extends Model {}
 
 // create fields/columns for Post model
-Plant.init(
+Post.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -13,53 +12,34 @@ Plant.init(
       primaryKey: true,
       autoIncrement: true
     },
-    // name of plant
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    // recommended sunlight
-    sunlight: {
+    title: {
       type: DataTypes.STRING,
       allowNull: false,
-    },
-    // recommended water
-    water: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    // date last watered
-    date_water: {
-      type: DataTypes.DATE,
       validate: {
-        isDate: true
+        len:[1]
       }
     },
-    // plant image
-    plant_img: {
-      type: DataTypes.BLOB,
-      allowNull: false
-    }, 
-    // plant owner id
+    post_text: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+      validate: {
+        len: [1]
+      }
+    },
     user_id: {
       type: DataTypes.INTEGER,
       references: {
         model: 'user',
         key: 'id'
       }
-    },
-    // plant type
-    category_id: {
-      type: DataTypes.INTEGER
-    },
-  
+    }
   },
   {
     sequelize,
     freezeTableName: true,
     underscored: true,
-    modelName: 'plant'
+    modelName: 'post'
   }
 );
 
-module.exports = Plant;
+module.exports = Post;

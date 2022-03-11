@@ -1,25 +1,31 @@
 const router = require('express').Router();
 const sequelize = require('../config/connection');
-const { Profile, User } = require('../models');
+const { Post, User, Comment } = require('../models');
 const withAuth = require('../utils/auth');
 
 // get all posts for dashboard
 router.get('/', withAuth, (req, res) => {
   console.log(req.session);
 
-  Profile.findAll({
+  Post.findAll({
     where: {
       user_id: req.session.user_id
     },
     attributes: [
       'id',
-      'name',
-      'sunlight',
-      'water',
-      'date_water',
-      'plant_img'
+      'post_text',
+      'title',
+      'created_at'
     ],
     include: [
+      {
+        model: Comment,
+        attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
+        include: {
+          model: User,
+          attributes: ['username']
+        }
+      },
       {
         model: User,
         attributes: ['username']
@@ -37,7 +43,7 @@ router.get('/', withAuth, (req, res) => {
 });
 
 router.get('/edit/:id', withAuth, (req, res) => {
-  Profile.findByPk(req.params.id, {
+  Post.findByPk(req.params.id, {
     attributes: [
       'id',
       'post_text',
@@ -45,6 +51,14 @@ router.get('/edit/:id', withAuth, (req, res) => {
       'created_at'
     ],
     include: [
+      {
+        model: Comment,
+        attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
+        include: {
+          model: User,
+          attributes: ['username']
+        }
+      },
       {
         model: User,
         attributes: ['username']
@@ -55,7 +69,7 @@ router.get('/edit/:id', withAuth, (req, res) => {
       if (dbPostData) {
         const post = dbPostData.get({ plain: true });
         
-        res.render('edit-plant-profile', {
+        res.render('edit-post', {
           post,
           loggedIn: true
         });
@@ -69,7 +83,7 @@ router.get('/edit/:id', withAuth, (req, res) => {
 });
 
 router.get('/newpost', (req, res) => {
-  res.render('new-plant-profile');
+  res.render('new-posts');
 });
 
 module.exports = router;
